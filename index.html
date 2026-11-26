@@ -7,12 +7,18 @@
 #tree .unbalanced circle{fill:#fff0ee;stroke:#d94b4b;stroke-width:3}
 @keyframes stepReveal{from{opacity:.45}to{opacity:1}}#tree .node,#tree .edge{animation:stepReveal .2s ease-out}@media(prefers-reduced-motion:reduce){#tree .node,#tree .edge{animation:none}}
 
+/* V1.3 presentation edition */
+.topbar{height:70px;background:#112a49}.brand-icon{background:#e98a2c;color:#112a49}main{padding-top:20px}.view-tabs{margin-top:15px}.stats{gap:10px;margin-bottom:12px}.stats article{padding:10px 16px}.stats strong{font-size:1.5rem}.secondary-stats{margin-top:0}.tree-viewport{min-height:420px}.presentation-launch{background:#e98a2c;color:#112a49;border-color:#e98a2c}.presentation-launch:hover{background:#ffad59}
+#presentation{position:fixed;inset:0;z-index:100;background:#eef3fa;color:#112a49;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:12px;padding:18px 26px;overflow:auto}
+#presentation:fullscreen{width:100%;height:100%}.pres-header,.pres-stage,.pres-controls{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.pres-header{background:#112a49;color:white;margin:-18px -26px 0;padding:14px 26px}.pres-header h2{font-size:1.25rem}.pres-header small{color:#c5d7eb}.pres-actions,.pres-controls>div{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.pres-header select{max-width:340px}.pres-stage h2{font-size:clamp(1.25rem,2vw,1.9rem);margin:4px 0}.pres-stage p{margin:0;color:#536983}.pres-progress{min-width:150px;text-align:right}.pres-progress progress{width:100%;height:10px;accent-color:#e98a2c}.pres-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(270px,30%);gap:14px;min-height:0}.pres-visual{display:grid;grid-template-rows:auto auto minmax(0,1fr);min-height:0;padding:12px 16px}.pres-visual-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.pres-charts{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;min-height:0}.pres-charts.paired{grid-template-columns:repeat(2,minmax(0,1fr))}.pres-chart{display:flex;flex-direction:column;min-height:0;min-width:0;background:#f8faff;border:1px solid #e0e8f1;border-radius:8px;overflow:hidden}.pres-chart h3{padding:9px 12px;margin:0;background:#eaf0f9}.pres-chart svg{flex:1;width:100%;height:100%;min-height:0;display:block}.pres-chart .edge{stroke:#a9bed6;stroke-width:2.5}.pres-chart .path-edge{stroke:#e98a2c;stroke-width:4}.pres-chart circle{fill:#fff;stroke:#254c83;stroke-width:2.5}.pres-chart .visited circle{fill:#fff0d9;stroke:#e98a2c}.pres-chart .active circle{fill:#e98a2c;stroke:#c96b12}.pres-chart .unbalanced circle{fill:#ffeded;stroke:#cf4141;stroke-width:3.5}.pres-chart .rotating circle{fill:#dceaff;stroke:#2563c7;stroke-width:3.5}.pres-chart .found circle{fill:#25865c;stroke:#176d48}.pres-chart .id{text-anchor:middle;dominant-baseline:central;font-size:21px;font-weight:750;fill:#112a49}.pres-chart .found .id{fill:#fff}.pres-chart .meta{text-anchor:middle;font-size:14px;fill:#405d80;font-weight:600}.pres-chart .rotation-arrow{fill:none;stroke:#2563c7;stroke-width:3.5;stroke-dasharray:5 4}.pres-chart .empty-label{text-anchor:middle;fill:#647993;font-size:19px}.pres-metrics{padding:10px 12px;line-height:1.5;color:#304e74;font-size:.9rem;margin:0}.pres-explain{padding:18px;overflow:auto;min-height:0}.pres-explain h3{font-size:.95rem;margin:0 0 10px}.pres-explain p{line-height:1.55;font-size:1rem;margin:0 0 16px}.pres-explain pre{font-size:.84rem;line-height:1.55}.pres-explain dl{display:grid;grid-template-columns:auto 1fr;gap:8px 12px;font-size:.92rem;margin:12px 0 18px}.pres-explain dt{color:#5d6e85}.pres-explain dd{margin:0;font-weight:650;overflow-wrap:anywhere}.pres-controls{background:#fff;border:1px solid #dce3ee;border-radius:10px;padding:10px 14px}.pres-controls label{margin:0}.pres-controls .primary{background:#254c83}.pres-shortcuts{color:#627590;font-size:.76rem}.pres-legend{margin:8px 0;font-size:.8rem}.pres-legend .blue{background:#2563c7}
+@media(max-width:800px){#presentation{padding:12px;grid-template-rows:auto auto auto auto}.pres-header{margin:-12px -12px 0;padding:12px}.pres-grid{grid-template-columns:1fr}.pres-charts{min-height:340px}.pres-charts.paired{grid-template-columns:1fr}.pres-chart svg{min-height:290px}.pres-explain{overflow:visible}.pres-progress{text-align:left}.pres-shortcuts{display:none}}
+@media(max-height:820px) and (min-width:801px){#presentation{padding:12px 20px;gap:8px}.pres-header{margin:-12px -20px 0;padding:10px 20px}.pres-explain{padding:12px}.pres-explain p{font-size:.93rem;margin-bottom:10px}.pres-explain dl{margin:8px 0 12px}.pres-controls{padding:7px 10px}.pres-legend{margin:5px 0}.pres-visual{padding:8px 12px}}
 </style></head>
 <body data-view="management">
 <header class="topbar"><a class="brand" href="#" aria-label="AVL Studio home"><span class="brand-icon">AVL</span><span>AVL <b>Studio</b><small>STUDENT MANAGEMENT</small></span></a><div class="course">Advanced Data Structures & Algorithms<span>Interactive algorithm lab</span></div><span class="local-badge">OFFLINE WORKSPACE</span></header>
 <main>
  <section class="intro"><div><p class="eyebrow">BALANCED BY DESIGN</p><h1>Every student. In balance.</h1><p>Manage student records. See the AVL algorithm at work.</p></div><div class="file-actions"><button id="export">Export JSON</button><label class="button" for="import-file">Import JSON</label><input id="import-file" type="file" accept=".json,application/json" hidden><button id="reset" class="mutating">Reset demo</button></div></section>
- <nav class="view-tabs" aria-label="Workspace views"><button data-view="management" class="selected" aria-pressed="true">Student Management</button><button data-view="visualization" aria-pressed="false">AVL Visualization</button><button data-view="comparison" aria-pressed="false">Algorithm Comparison</button></nav>
+ <nav class="view-tabs" aria-label="Workspace views"><button data-view="management" class="selected" aria-pressed="true">Student Management</button><button data-view="visualization" aria-pressed="false">AVL Visualization</button><button data-view="comparison" aria-pressed="false">Algorithm Comparison</button><button id="launch-presentation" class="presentation-launch">Presentation Mode</button></nav>
  <div id="notice" role="status" aria-live="polite">Ready. Select a node to inspect a student, or try a rotation example.</div>
  <div id="management-view">
  <section class="stats" aria-label="Tree statistics"><article><span>Total nodes</span><strong id="count">0</strong><small>Students in the displayed tree</small></article><article><span>Tree height</span><strong id="height">0</strong><small>Empty = 0 · leaf = 1</small></article><article><span>Nodes checked</span><strong id="checked">0</strong><small>Comparisons in this operation</small></article><article><span>Rotations</span><strong id="rotations">0</strong><small>Single rotations in this operation</small></article></section>
@@ -41,6 +47,15 @@
  <section class="panel academic-reference"><h2>AVL complexity reference</h2><div class="complexity-list"><span>Search <b>O(log n)</b></span><span>Insertion <b>O(log n)</b></span><span>Deletion <b>O(log n)</b></span><span>Single rotation <b>O(1)</b></span><span>Traversal <b>O(n)</b></span><span>Storage <b>O(n)</b></span></div><p class="muted">These are core AVL bounds. Full snapshots, tree cloning, SVG rendering and JSON persistence add separate overhead. Capacity: 250 students. Comparison: at most 50 IDs.</p></section>
  <footer><span>Nguyễn Song Hào Kiệt <b>MITIU25211</b> &nbsp;·&nbsp; Nguyễn Trí Nhân</span><span>Advanced Data Structures & Algorithms · 27 Nov 2026</span></footer>
 </main>
+<section id="presentation" hidden aria-label="Guided AVL presentation">
+  <header class="pres-header"><div><h2>AVL Studio · Presentation</h2><small>Advanced Data Structures &amp; Algorithms</small></div><div class="pres-actions"><label class="sr-only" for="pres-demo">Guided scenario</label><select id="pres-demo"><option value="1">Demo 1 · Student management &amp; self-balancing</option><option value="2">Demo 2 · Rebalancing &amp; AVL vs BST</option></select><button id="pres-fullscreen">Fullscreen</button><button id="pres-exit">Exit presentation</button></div></header>
+  <div class="pres-stage"><div><p id="pres-chapter"></p><h2 id="pres-title" aria-live="polite"></h2></div><div class="pres-progress"><strong id="pres-count"></strong><br><progress id="pres-progress" value="1" max="1"></progress></div></div>
+  <div class="pres-grid">
+    <section class="panel pres-visual"><div class="pres-visual-head"><h2>Algorithm visualization</h2><span class="tag" id="pres-mode"></span></div><div class="legend pres-legend"><i class="orange"></i> Visited <i class="red"></i> Unbalanced <i class="blue"></i> Rotation <i class="green"></i> Found</div><div class="pres-charts" id="pres-charts"><article class="pres-chart"><h3 id="pres-left-title"></h3><svg id="pres-left" role="img" aria-label="Current tree"></svg><p id="pres-left-metrics" class="pres-metrics"></p></article><article class="pres-chart" id="pres-right-panel" hidden><h3 id="pres-right-title"></h3><svg id="pres-right" role="img" aria-label="Comparison tree"></svg><p id="pres-right-metrics" class="pres-metrics"></p></article></div></section>
+    <aside class="panel pres-explain"><h3>Execution event</h3><p id="pres-event"></p><dl><dt>Node</dt><dd id="pres-node"></dd><dt>Balance factor</dt><dd id="pres-bf"></dd><dt>Visited path</dt><dd id="pres-path"></dd><dt>Rotations</dt><dd id="pres-rotations"></dd></dl><h3>Explanation</h3><p id="pres-explanation"></p><h3>Pseudocode</h3><pre id="pres-code"></pre></aside>
+  </div>
+  <div class="pres-controls"><div><button id="pres-prev">Previous</button><button id="pres-next" class="primary">Next</button><button id="pres-play">Play</button><button id="pres-pause">Pause</button><button id="pres-restart">Restart</button></div><div><label for="pres-speed">Speed</label><select id="pres-speed"><option value="4000">Slow</option><option value="2400" selected>Normal</option><option value="1000">Fast</option></select><span class="pres-shortcuts">← → Navigate · Space Play/Pause · R Restart · Esc Exit</span></div></div>
+</section>
 <script id="avl-core">
 'use strict';
 // V1.2: direct JavaScript port of avl.py and comparison.py. No secondary record index.
@@ -295,7 +310,59 @@
       return {...this.payload(tree),result};
     }
   }
-  globalThis.AVLStandalone={AVLTree,AVLNode,BST,StudentStore,compare,validateStudent,integer,importTree,parseImport,browserStorage,STORAGE_KEY,MAX_RECORDS,height,balance};
+  // Guided stages select snapshots emitted by the same AVL implementation.
+  function guidedDemo(number) {
+    let tree=new AVLTree(), stages=[];
+    const add=(chapter,title,frame,explanation,before=null,comparison=null)=>stages.push({chapter,title,frame,explanation,before,comparison});
+    const operation=(name,run)=>{tree.begin(name);run();return tree.steps;};
+    const insert=id=>operation('Insert '+id,()=>tree.insert(sample(id)));
+    const last=steps=>steps.at(-1);
+    const event=(steps,kind,index=0)=>steps.filter(step=>step.kind===kind)[index];
+    const empty=chapter=>{tree=new AVLTree();tree.begin('Start');add(chapter,'Start with an empty tree',tree.steps[0],'Empty height = 0. Each new leaf starts at height 1.');};
+    const simpleInsert=(chapter,id)=>{const steps=insert(id);add(chapter,'Insert student '+id,{...last(steps),path:event(steps,'insert').path},'Insert by Student ID; update heights while returning from recursion.');};
+    const rotation=(chapter,steps,index,title)=>add(chapter,title,event(steps,'rotation',index),'Reconnect subtree links and refresh heights. A single rotation takes O(1).',event(steps,'before_rotation',index));
+    const imbalance=(chapter,steps)=>{const frame=event(steps,'imbalance');add(chapter,frame.case+' imbalance at node '+frame.active,frame,'BF = height(left) - height(right). A magnitude above 1 requires rebalancing.');};
+    if(number===1) {
+      const chapter='Student management & self-balancing';
+      empty(chapter);simpleInsert(chapter,10);simpleInsert(chapter,20);
+      const steps=insert(30);
+      add(chapter,'Insert student 30',event(steps,'insert'),'The new leaf extends the right subtree. Ancestor heights are updated next.');
+      imbalance(chapter,steps);rotation(chapter,steps,0,'Perform left rotation at node 10');
+      add(chapter,'Balanced tree · root '+tree.root.student.id,last(steps),'The three keys remain in sorted order. Every node has |BF| ≤ 1.');
+      const searched=operation('Search 30',()=>tree.search(30));
+      add(chapter,'Search student 30',last(searched),'Follow the actual comparison path from the root until ID 30 is found.');
+      const updated=operation('Update 20',()=>tree.update(20,{...tree.root.student,gpa:3.8}));
+      add(chapter,'Update GPA of student 20',{...last(updated),path:event(updated,'found').path},'GPA changes from 3.2 to 3.8; Student ID and links remain fixed.');
+      tree.begin('Insert 20');
+      try {tree.insert(sample(20));} catch(error) {tree.emit('reject',error.message,20,tree.steps.at(-1).path);}
+      add(chapter,'Reject duplicate ID 20',last(tree.steps),'Unique keys prevent duplicate student records.');
+      const deleted=operation('Delete 10',()=>tree.delete(10));
+      add(chapter,'Delete student 10',event(deleted,'delete'),'Remove the leaf and update affected ancestors.');
+      add(chapter,'Final balanced tree',last(deleted),'The remaining student records are 20 and 30. No rotation was needed.');
+    } else if(number===2) {
+      let chapter='A · Left-right rotation';
+      empty(chapter);simpleInsert(chapter,30);simpleInsert(chapter,10);
+      let steps=insert(20);
+      add(chapter,'Insert student 20',event(steps,'insert'),'The insertion extends the right subtree of the left child.');
+      imbalance(chapter,steps);rotation(chapter,steps,0,'Left rotation at node 10');rotation(chapter,steps,1,'Right rotation at node 30');
+      add(chapter,'Balanced tree · root '+tree.root.student.id,last(steps),'The two rotations restore AVL balance while preserving key order.');
+      chapter='B · Deletion rebalancing';empty(chapter);
+      for(const id of [4,2,5,1,3]) simpleInsert(chapter,id);
+      steps=operation('Delete 5',()=>tree.delete(5));
+      add(chapter,'Delete student 5',event(steps,'delete'),'Removing the right leaf shortens the right subtree.');
+      imbalance(chapter,steps);rotation(chapter,steps,0,'Right rotation at node 4');
+      add(chapter,'Balanced tree · root '+tree.root.student.id,last(steps),'Deletion can require rotations even when the heavy child has BF = 0.');
+      chapter='C · AVL versus BST';empty(chapter);
+      const keys=[10,20,30,40,50,60,70];
+      for(const id of keys) simpleInsert(chapter,id);
+      const comparison=compare(keys,70);
+      const reduction=(comparison.bst.comparisons-comparison.avl.comparisons)/comparison.bst.comparisons*100;
+      const searched=operation('Search 70',()=>tree.search(70));
+      add(chapter,'Search ID 70 · AVL versus BST',last(searched),'Sorted insertion produces a tall ordinary BST. AVL reduces node visits by '+reduction.toFixed(1)+'% in this experiment.',null,{...comparison,reduction});
+    } else throw new Error('Unknown guided demo.');
+    return stages;
+  }
+  globalThis.AVLStandalone={guidedDemo,AVLTree,AVLNode,BST,StudentStore,compare,validateStudent,integer,importTree,parseImport,browserStorage,STORAGE_KEY,MAX_RECORDS,height,balance};
 })();
 
 </script>
@@ -562,5 +629,119 @@ document.querySelectorAll('nav [data-view]').forEach(button=>button.addEventList
   else if(displayed) draw(displayed.tree,displayed.frame);
 }));
 
+/* Guided presentation controller, independent of the management store. */
+(() => {
+  const panel=$('presentation');
+  let stages=[], index=0, clock=null, opener=null, previousPositions=new Map();
+  const codes={
+    insert:'INSERT(node, key)\n  descend by key\n  reject equal key\n  attach new leaf\n  update height\n  rebalance(node)',
+    delete:'DELETE(node, key)\n  descend by key\n  remove / reconnect node\n  update height\n  rebalance(node)',
+    search:'SEARCH(node, key)\n  while node exists\n    compare key and node.id\n    if equal: return node\n    descend left or right',
+    update:'UPDATE(key, record)\n  node = SEARCH(root, key)\n  require unchanged ID\n  replace student data',
+    start:'height(empty) = 0\nheight(leaf) = 1\nBF = height(left) - height(right)'
+  };
+  function find(node,id){return !node?null:node.id===id?node:find(node.left,id)||find(node.right,id);}
+  function renderTree(target,tree,frame={},animate=false) {
+    const canvas=$(target), nodes=[], edges=[], byId=new Map(), old=previousPositions.get(target)||new Map();
+    let order=0, depthMax=0;
+    function layout(node,depth) {
+      if(!node) return null;
+      const left=layout(node.left,depth+1);
+      const point={node,x:65+order++*112,y:52+depth*86};nodes.push(point);byId.set(node.id,point);depthMax=Math.max(depthMax,depth);
+      const right=layout(node.right,depth+1);
+      if(left) edges.push([point,left]);if(right) edges.push([point,right]);
+      return point;
+    }
+    layout(tree,0);
+    const width=Math.max(280,order*112+18), height=Math.max(220,depthMax*86+106);
+    canvas.replaceChildren();canvas.setAttribute('viewBox','0 0 '+width+' '+height);
+    if(!tree) canvas.append(svg('text',{x:width/2,y:height/2,class:'empty-label'},'Empty tree · height 0'));
+    const path=frame.path||[];
+    for(const [a,b] of edges){
+      const visited=path.some((id,i)=>id===a.node.id&&path[i+1]===b.node.id);
+      canvas.append(svg('line',{x1:a.x+Math.sign(b.x-a.x)*23,y1:a.y+10,x2:b.x,y2:b.y-25,class:visited?'edge path-edge':'edge'}));
+    }
+    if(frame.kind==='before_rotation'&&frame.affected?.length===2){
+      const a=byId.get(frame.affected[0]),b=byId.get(frame.affected[1]);
+      if(a&&b){
+        const markerId=target+'-arrow';
+        const defs=svg('defs',{}),marker=svg('marker',{id:markerId,markerWidth:8,markerHeight:8,refX:6,refY:3,orient:'auto'});
+        marker.append(svg('path',{d:'M0 0 L6 3 L0 6 Z',fill:'#2563c7'}));defs.append(marker);canvas.append(defs);
+        const side=Math.sign(b.x-a.x);
+        canvas.append(svg('path',{d:'M '+(b.x+side*24)+' '+(b.y-18)+' Q '+(b.x+side*65)+' '+(a.y-25)+' '+(a.x+side*25)+' '+(a.y-10),class:'rotation-arrow','marker-end':'url(#'+markerId+')'}));
+      }
+    }
+    for(const {node,x,y} of nodes){
+      const classes=['node'];
+      if(path.includes(node.id)) classes.push('visited');
+      if(node.id===frame.active) classes.push('active');
+      if(Math.abs(node.balance)>1) classes.push('unbalanced');
+      if((frame.affected||[]).includes(node.id)) classes.push('rotating');
+      if(frame.kind==='found'&&node.id===frame.active) classes.push('found');
+      const group=svg('g',{class:classes.join(' '),transform:'translate('+x+','+y+')'});
+      group.append(svg('circle',{r:26}),svg('text',{class:'id'},node.id),svg('text',{class:'meta',y:43},'H '+node.height+' · BF '+(node.balance>0?'+':'')+node.balance));
+      canvas.append(group);
+      const prior=old.get(node.id);
+      if(animate&&prior&&group.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+        group.animate([{transform:'translate('+prior.x+'px,'+prior.y+'px)'},{transform:'translate('+x+'px,'+y+'px)'}],{duration:Math.min(550,Number($('pres-speed').value)/2),easing:'ease-in-out'});
+      }
+    }
+    previousPositions.set(target,byId);
+  }
+  function metrics(tree,frame){return 'Root: '+(tree?.id??'—')+' · Height: '+treeHeight(tree)+' · Nodes: '+collect(tree).length+' · Visits: '+(frame.checked??0);}
+  function comparisonMetrics(result){return 'Height: '+result.height+' · Visits: '+result.comparisons+' · Path: '+result.path.join(' → ');}
+  function render(){
+    const stage=stages[index],frame=stage.frame,comparison=stage.comparison,paired=!!(stage.before||comparison);
+    $('pres-chapter').textContent=stage.chapter;$('pres-title').textContent=stage.title;
+    $('pres-count').textContent='Stage '+(index+1)+' / '+stages.length;$('pres-progress').max=stages.length;$('pres-progress').value=index+1;
+    $('pres-mode').textContent=comparison?'ACTUAL COMPARISON':stage.before?'BEFORE / AFTER':'AVL SNAPSHOT';
+    $('pres-charts').classList.toggle('paired',paired);$('pres-right-panel').hidden=!paired;
+    if(comparison){
+      for(const [side,type] of [['left','avl'],['right','bst']]){
+        const result=comparison[type];$('pres-'+side+'-title').textContent=type==='avl'?'AVL tree':'Ordinary BST';
+        renderTree('pres-'+side,result.tree,{path:result.path,active:result.path.at(-1),kind:result.found?'found':'not_found'});
+        $('pres-'+side+'-metrics').textContent=comparisonMetrics(result);
+      }
+    }else{
+      $('pres-left-title').textContent=stage.before?'Before · '+stage.before.rotation:'Current AVL tree';
+      const left=stage.before||frame;renderTree('pres-left',left.tree,left,!stage.before);
+      $('pres-left-metrics').textContent=metrics(left.tree,left);
+      if(stage.before){
+        $('pres-right-title').textContent='After · '+frame.rotation;
+        previousPositions.set('pres-right',previousPositions.get('pres-left'));
+        renderTree('pres-right',frame.tree,frame,true);$('pres-right-metrics').textContent=metrics(frame.tree,frame);
+      }
+    }
+    $('pres-event').textContent=frame.message;$('pres-node').textContent=frame.active??'—';
+    const node=find(frame.tree,frame.active);
+    $('pres-bf').textContent=node?(node.left?.height??0)+' − '+(node.right?.height??0)+' = '+node.balance:'—';
+    $('pres-path').textContent=frame.path?.length?frame.path.join(' → '):'—';
+    $('pres-rotations').textContent=frame.rotations??0;$('pres-explanation').textContent=stage.explanation;
+    const operation=frame.operation.split(' ')[0].toLowerCase();
+    $('pres-code').textContent=stage.before?(frame.rotation==='Left rotation'?'ROTATE_LEFT(x)\n  y = x.right\n  x.right = y.left\n  y.left = x\n  update heights; return y':'ROTATE_RIGHT(y)\n  x = y.left\n  y.left = x.right\n  x.right = y\n  update heights; return x'):codes[operation]||codes.start;
+    $('pres-prev').disabled=index===0;$('pres-next').disabled=index===stages.length-1;
+    $('pres-play').disabled=clock!==null||index===stages.length-1;$('pres-pause').disabled=clock===null;
+  }
+  function pausePresentation(){clearTimeout(clock);clock=null;if(!panel.hidden){$('pres-play').disabled=index===stages.length-1;$('pres-pause').disabled=true;}}
+  function move(delta){index=Math.max(0,Math.min(stages.length-1,index+delta));render();if(index===stages.length-1)pausePresentation();}
+  function play(){if(clock!==null||index===stages.length-1)return;clock=setTimeout(()=>{clock=null;move(1);play();},Number($('pres-speed').value));$('pres-play').disabled=true;$('pres-pause').disabled=false;}
+  function restart(){pausePresentation();stages=AVLStandalone.guidedDemo(Number($('pres-demo').value));index=0;previousPositions.clear();render();}
+  function open(){opener=document.activeElement;panel.hidden=false;document.body.style.overflow='hidden';restart();$('pres-next').focus();}
+  function close(){pausePresentation();panel.hidden=true;document.body.style.overflow='';if(document.fullscreenElement===panel)document.exitFullscreen().catch(()=>{});opener?.focus();}
+  $('launch-presentation').addEventListener('click',open);
+  $('pres-exit').addEventListener('click',close);$('pres-demo').addEventListener('change',restart);
+  $('pres-prev').addEventListener('click',()=>{pausePresentation();move(-1);});
+  $('pres-next').addEventListener('click',()=>{pausePresentation();move(1);});
+  $('pres-restart').addEventListener('click',restart);$('pres-play').addEventListener('click',play);$('pres-pause').addEventListener('click',pausePresentation);
+  $('pres-speed').addEventListener('change',()=>{if(clock!==null){pausePresentation();play();}});
+  $('pres-fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement===panel)await document.exitFullscreen();else await panel.requestFullscreen();}catch{$('pres-fullscreen').textContent='Fullscreen unavailable';}});
+  document.addEventListener('fullscreenchange',()=>{$('pres-fullscreen').textContent=document.fullscreenElement===panel?'Exit fullscreen':'Fullscreen';});
+  document.addEventListener('keydown',e=>{
+    if(panel.hidden||e.target.closest?.('input,textarea,select,[contenteditable="true"]'))return;
+
+    const actions={ArrowRight:()=>{pausePresentation();move(1);},ArrowLeft:()=>{pausePresentation();move(-1);},' ':()=>clock===null?play():pausePresentation(),r:restart,R:restart,Escape:close};
+    if(actions[e.key]){e.preventDefault();actions[e.key]();}
+  });
+})();
 </script>
 </body></html>
