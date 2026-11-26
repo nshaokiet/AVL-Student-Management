@@ -1,9 +1,9 @@
-# AVL Studio V1.3 — presentation rehearsal
+# AVL Academic Studio V2.0 — presentation rehearsal
 
 **Student Management System Using an AVL Tree with Interactive Visualization**
 Friday, 27 November 2026 · Advanced Data Structures & Algorithms
 
-Open index.html in Chrome or Edge, or use the GitHub Pages URL. Choose **Presentation Mode**, select a scenario, and optionally click **Fullscreen**. No server or installation is needed.
+Open the local V2.0 index.html in Chrome or Edge. The deployed GitHub Pages site remains at V1.3 pending approval. Choose **Presentation Mode**, select a scenario, and optionally click **Fullscreen**. No server or installation is needed.
 
 ## Demo 1 — Student management & self-balancing (about 2 minutes)
 
@@ -25,7 +25,7 @@ Open index.html in Chrome or Edge, or use the GitHub Pages URL. Choose **Present
 
 ## Controls
 
-Next / Previous, Play / Pause, Restart, Slow / Normal / Fast. Keyboard: Right / Left arrow, Space, R, Escape. Keyboard shortcuts are disabled inside editing fields and selects. Restart reconstructs the selected demo from scratch. Exit presentation returns to the existing student workspace. Both demos are isolated from student records and local storage.
+Next / Previous, Play / Pause, Restart, Slow / Normal / Fast. Keyboard: Right / Left arrow, Space, R, Escape. Keyboard shortcuts are disabled inside editing fields and selects. Restart reconstructs the selected demo from scratch. Exit presentation returns to the existing student workspace. All three demos are isolated from student records and local storage.
 
 ## Rehearsal checklist
 
@@ -33,3 +33,17 @@ Next / Previous, Play / Pause, Restart, Slow / Normal / Fast. Keyboard: Right / 
 - Show the before/after views, direction arrow, balance calculation, and pseudocode.
 - Check fullscreen on the presentation laptop and set the desired speed.
 - Exit and confirm the management workspace retains its records; try ordinary CRUD and Algorithm Comparison if time permits.
+
+
+## Demo 3 — Practical academic application (3–5 minutes)
+
+Choose Guided Demo 3. All 22 stages use an isolated seven-student fictional dataset; the management records and saved data are unaffected.
+
+| Chapter | Presenter cue | Expected output |
+| --- | --- | --- |
+| A — Academic ranking | Show ID AVL and ranking AVL; explain height, BF, subtree size and ID tie-breaker. Query Top 3 and Select(5). | Top 3: 50, 20, 30; rank 5: 40 |
+| B — Scholarship screening | Screen GPA ≥ 3.80. Query inclusive range [3.50, 3.80] and count using subtree sizes. Explain faded/pruned branches. | Eligible: 3; range IDs: 20, 30, 70, 40; count: 4 |
+| C — Dynamic ranking | Follow actual old-key removal, new-key insertion, metadata updates and balancing events. | ID 10: GPA 3.20 → 3.95, rank 6 → 1; Top 3: 10, 50, 20; eligible: 4 |
+| D — Conclusion | Read actual Select visit count versus sequential traversal; explain synchronization, O(log n) core rank/select and O(n) index storage. | Same selected record; actual visit metrics displayed |
+
+The GPA rule is an illustrative screening criterion, not a scholarship award decision. Use Previous/Next to pause on each rotation, or play at Normal speed and explain the key stages. Restart and exit as in the previous demos.

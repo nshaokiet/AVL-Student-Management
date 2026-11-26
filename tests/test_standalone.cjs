@@ -191,3 +191,94 @@ test('Guided demos are repeatable, reset to empty and never alter persisted mana
   }
   assert.deepEqual(store.state(),before);assert.equal(storage.getItem(STORAGE_KEY),saved);
 });
+
+const {RankingAVL,rankCompare,validateID,academicCompare,guidedDemo}=AVLStandalone;
+const academicRecords=[3.2,3.8,3.8,3.5,3.9,2.9,3.6].map((gpa,i)=>student((i+1)*10,gpa));
+const ids=records=>records.map(s=>s.id);
+function academicStore(storage=null){
+  const store=new StudentStore(storage);store.importJSON(JSON.stringify(academicRecords));return store;
+}
+function checkDual(store,records){
+  valid(store.tree,ids(records));assert.equal(validateID(store.tree),true);
+  assert.equal(store.ranking.validate(records),true);
+  const sorted=[...records].sort(rankCompare);
+  assert.deepEqual(store.ranking.topK(sorted.length).value,sorted);
+  for(let i=0;i<sorted.length;i++){
+    assert.equal(store.rank(sorted[i].id).value,i+1);
+    assert.deepEqual(store.ranking.select(i+1).value,sorted[i]);
+  }
+}
+test('Dual indexes: rank/select, equal GPA, inclusive ranges, threshold and top K',()=>{
+  const store=academicStore(),r=store.ranking;checkDual(store,academicRecords);
+  assert.deepEqual(ids(r.topK(3).value),[50,20,30]);assert.equal(r.select(5).value.id,40);
+  assert.equal(r.countAbove(3.8).value,3);assert.deepEqual(ids(r.range(3.5,3.8).value),[20,30,70,40]);
+  assert.equal(r.rangeCount(3.5,3.8).value,4);assert.deepEqual(ids(r.range(3.8,3.8).value),[20,30]);
+  assert.equal(r.rangeCount(3.8,3.8).value,2);assert.deepEqual(r.topK(0).value,[]);
+  assert.deepEqual(ids(r.range(3.5,3.8,2).value),[20,30]);assert.equal(store.rank(99).value,null);
+  for(const k of [0,-1,8,1.5,NaN])assert.throws(()=>r.select(k));
+  for(const k of [-1,8,1.5,NaN])assert.throws(()=>r.topK(k));
+  for(const [a,b] of [[3,2],[-1,3],[0,5],[NaN,4]]){assert.throws(()=>r.range(a,b));assert.throws(()=>r.rangeCount(a,b));}
+});
+test('GPA update rekeys ranking, preserves precision, deletion and persisted import/export',()=>{
+  const storage=memoryStorage(),store=academicStore(storage);
+  const updated={...academicRecords[0],gpa:3.95};
+  store.operate({action:'update',id:10,student:updated});
+  assert.deepEqual(store.lastRankChange,{id:10,oldGpa:3.2,newGpa:3.95,oldRank:6,newRank:1});
+  assert.deepEqual(ids(store.ranking.topK(3).value),[10,50,20]);assert.equal(store.ranking.countAbove(3.8).value,4);
+  assert.ok(store.rankingEvents.some(e=>e.kind==='remove_key'));assert.ok(store.rankingEvents.some(e=>e.kind==='insert_key'));
+  const precise={...updated,gpa:3.951234567};
+  store.operate({action:'update',id:10,student:precise});
+  store.operate({action:'delete',id:30});
+  const expected=[precise,...academicRecords.slice(1).filter(s=>s.id!==30)];
+  checkDual(store,expected);checkDual(new StudentStore(storage),expected);
+  const restored=new StudentStore();restored.importJSON(store.exportJSON());checkDual(restored,expected);
+});
+test('Rejected dual-index operations leave records, indexes, version and persistence intact',()=>{
+  const storage=memoryStorage(),store=academicStore(storage);
+  const before=store.state(),rank=store.ranking.snapshot(),saved=storage.getItem(STORAGE_KEY);
+  for(const bad of [{action:'insert',student:student(10)},{action:'update',id:10,student:student(10,5)},{action:'delete',id:99},{action:'import',students:[student(1),student(1)]}]){
+    assert.throws(()=>store.operate(bad));assert.deepEqual(store.state(),before);
+    assert.deepEqual(store.ranking.snapshot(),rank);assert.equal(storage.getItem(STORAGE_KEY),saved);
+  }
+  store.operate({action:'clear'});checkDual(store,[]);
+  assert.equal(store.ranking.countAbove(0).value,0);assert.equal(store.ranking.rangeCount(0,4).value,0);
+  assert.deepEqual(store.ranking.range(0,4).value,[]);assert.equal(store.rank(1).value,null);assert.throws(()=>store.ranking.select(1));
+  store.operate({action:'reset'});checkDual(store,store.tree.inorder());
+});
+test('250-record augmented queries have height-bounded visits and matching reference results',()=>{
+  const records=Array.from({length:250},(_,i)=>student(i+1,i/100));
+  const r=RankingAVL.build(records),h=r.root.height;
+  assert.ok(r.select(123).visited.length<=h);assert.ok(r.rank(records[30]).visited.length<=h);
+  assert.ok(r.rangeCount(1,1.1).visited.length<=2*h);assert.ok(r.countAbove(1).visited.length<=h);
+  const narrow=r.range(1,1.02);assert.deepEqual(ids(narrow.value),[103,102,101]);assert.ok(narrow.visited.length<=2*h+3);
+  for(const [kind,a,b] of [['select',123,0],['range',1,1.1],['count',1,1.1]]){
+    const c=academicCompare(r,kind,a,b);assert.deepEqual(c.optimized.value,c.baseline);
+    assert.ok(c.optimized.visited.length<c.examined);
+  }
+});
+test('600 seeded dual-index CRUD operations and queries agree with sorted array reference',()=>{
+  const store=new StudentStore();store.operate({action:'clear'});const expected=new Map();
+  let seed=416;const random=()=>{seed=(Math.imul(1664525,seed)+1013904223)>>>0;return seed/4294967296;};
+  for(let i=0;i<600;i++){
+    const id=1+Math.floor(random()*70),gpa=Math.floor(random()*41)/10;
+    if(!expected.has(id)){const s=student(id,gpa);store.operate({action:'insert',student:s});expected.set(id,s);}
+    else if(random()<.55){const s=student(id,gpa);store.operate({action:'update',id,student:s});expected.set(id,s);}
+    else{store.operate({action:'delete',id});expected.delete(id);}
+    const records=[...expected.values()];checkDual(store,records);
+    const lo=Math.floor(random()*31)/10,hi=lo+.5,sorted=records.sort(rankCompare),matches=sorted.filter(s=>s.gpa>=lo&&s.gpa<=hi);
+    assert.deepEqual(store.ranking.range(lo,hi).value,matches);assert.equal(store.ranking.rangeCount(lo,hi).value,matches.length);
+    assert.equal(store.ranking.countAbove(lo).value,sorted.filter(s=>s.gpa>=lo).length);
+  }
+});
+test('Guided Demo 3 derives all expected results, mutation events and isolated repeatable stages',()=>{
+  const storage=memoryStorage(),store=academicStore(storage),before=store.state(),saved=storage.getItem(STORAGE_KEY);
+  const stages=guidedDemo(3),value=title=>stages.find(s=>s.title===title).academic.query.value;
+  assert.ok(stages[0].academic.dual);assert.equal(stages[0].frame.tree.size,7);
+  assert.deepEqual(ids(value('Top 3 academic ranks')),[50,20,30]);assert.equal(value('Select rank 5').id,40);
+  assert.equal(value('Minimum GPA 3.80'),3);assert.deepEqual(ids(value('Inclusive GPA range [3.50, 3.80]')),[20,30,70,40]);
+  assert.equal(value('Count the GPA range'),4);assert.equal(value('Rank changes from 6 to 1'),1);
+  assert.deepEqual(ids(value('Updated Top 3')),[10,50,20]);assert.equal(value('Updated eligibility count'),4);
+  assert.ok(stages.some(s=>s.frame.kind==='remove_key'));assert.ok(stages.some(s=>s.frame.kind==='insert_key'));
+  assert.deepEqual(stages,guidedDemo(3));assert.deepEqual(store.state(),before);assert.equal(storage.getItem(STORAGE_KEY),saved);
+  console.log('Guided Demo 3 stages:',stages.length);
+});

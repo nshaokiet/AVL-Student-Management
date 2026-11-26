@@ -1,26 +1,27 @@
-# AVL Studio V1.3 — test report
+# AVL Academic Studio V2.0 — test report
 
-Run date: 26 November 2026. Deliverable: one offline, self-contained index.html using vanilla HTML/CSS/JavaScript/SVG. Existing Flask files were left in place.
+Run date: 26 November 2026. Scope: self-contained index.html and local verification only.
 
 ## Automated verification
 
-Command: node --test tests/test_standalone.cjs
+Command: `node --test tests/test_standalone.cjs`
 
-**34 passed, 0 failed** (31 existing tests plus 3 guided-demo regressions).
+**40 passed, 0 failed, 0 skipped** (34 existing regressions and 6 new tests).
 
-- Existing core AVL rotations, deletion, search, CRUD, validation, comparison, JSON import/export, persistence, and 250-record capacity.
-- 1,800 seeded randomized AVL operations, including invariant verification and draining the tree to empty.
-- Both embedded JavaScript blocks pass syntax validation; no external runtime assets.
-- Demo 1: all 12 stages, RR BF −2, actual left rotation, root 20, search path, GPA update, duplicate rejection and final deletion.
-- Demo 2: actual LR intermediate snapshots, deletion BF +2 and root 2, AVL/BST heights 3/7, visits 3/7 and calculated 57.1% reduction.
-- Both demos reset, repeat deterministically and preserve normal management records and persisted data.
+- 1,800 seeded randomized ID AVL operations, plus 600 seeded dual-index insert/update/delete operations checked against sorted-array reference results after each operation.
+- Strict ordering, both AVL height/balance invariants, ranking subtree sizes, consistency, ties, rank/select, top K, inclusive bounds, range count, threshold count, 250-record capacity, precision, JSON round-trip, persisted restore and rejection atomicity.
+- Height-bounded select and prefix-count visit checks and equal results for all three new algorithm comparisons.
+- Guided Demo 1: 12 stages; Demo 2: 27 stages; Demo 3: 22 stages with all specified expected results, real mutation events, restart and isolation.
+- Embedded JavaScript syntax and absence of external runtime assets verified.
 
 ## Browser verification
 
-Chrome headless was attempted at window sizes 1366×768 and 1920×1080. The initial process failed during GPU startup in the command sandbox. Retrying with a temporary profile outside that sandbox succeeded at actual inner viewports 1348×672 and 1902×984.
+Headless Chrome opened the actual local HTML with an isolated temporary profile. No external dependencies were installed.
 
-Both browser runs passed the guided UI checks: launch, previous/next keyboard navigation, select shortcut exclusion, before/after SVG and rotation arrow, demo switching, actual comparison metrics, restart, autoplay, pause, Escape, presentation fitting the viewport, and management-data isolation. Browser tests used an instrumented temporary copy of the standalone page; the instrumentation is not shipped.
+- PASS: overview health, ranking Top 3/rank/select, scholarship count and shortlist, ID AVL and range visualization, GPA edit through the student form, rank change, ranking mutation trace, advanced comparison.
+- PASS: all 12/27/22 guided stages, dual-index view, academic pseudocode, restart and management/localStorage isolation.
+- PASS: no unintended document-wide horizontal overflow across the six workspace views at 1366×768, 1920×1080 and 390×844 emulated CSS viewports; no uncaught JavaScript exceptions during the run.
 
 ## Limitations
 
-Physical fullscreen, subjective motion quality, projector readability and the full manual management workflow were not rehearsed interactively. Verify these on the presentation laptop. No execution-time improvement is inferred from the node-visit comparison.
+Physical projector/fullscreen rehearsal and subjective visual quality were not verified. CSV download, all file-picker interactions and every individual browser control were not separately exercised. The original Flask implementation was outside the standalone test scope. Node-visit counts measure algorithm operations, not elapsed-time performance. V2.0 is locally verified and has not been deployed.
